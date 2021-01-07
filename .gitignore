@@ -1,0 +1,4 @@
+# Project exclude paths
+/bukkit/target/
+/common/target/
+/velocity/target/

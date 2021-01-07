@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>ru.glowgrew</groupId>
+    <artifactId>spit</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>bukkit</module>
+        <module>common</module>
+        <module>velocity</module>
+    </modules>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <jackson.version>2.10.0</jackson.version>
+        <bukkit.version>1.12.2-R0.1-SNAPSHOT</bukkit.version>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>myMavenRepo</id>
+            <url>${myMavenRepoUrl}</url>
+        </repository>
+        <repository>
+            <id>papermc</id>
+            <url>https://papermc.io/repo/repository/maven-public/</url>
+        </repository>
+        <repository>
+            <id>spigot-repo</id>
+            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+        </repository>
+        <repository>
+            <id>velocity</id>
+            <url>https://repo.velocitypowered.com/snapshots/</url>
+        </repository>
+    </repositories>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Bukkit -->
+            <dependency>
+                <groupId>com.destroystokyo.paper</groupId>
+                <artifactId>paper-api</artifactId>
+                <version>${bukkit.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.bukkit</groupId>
+                <artifactId>craftbukkit</artifactId>
+                <version>${bukkit.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.spigotmc</groupId>
+                <artifactId>plugin-annotations</artifactId>
+                <version>1.2.2-SNAPSHOT</version>
+                <scope>provided</scope>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.bukkit</groupId>
+                        <artifactId>bukkit</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <!-- Velocity -->
+            <dependency>
+                <groupId>com.velocitypowered</groupId>
+                <artifactId>velocity-api</artifactId>
+                <version>1.1.4-SNAPSHOT</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>org.spongepowered</artifactId>
+                        <groupId>configurate-hocon</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>org.spongepowered</artifactId>
+                        <groupId>configurate-yaml</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>org.spongepowered</artifactId>
+                        <groupId>configurate-gson</groupId>
+                    </exclusion>
+                </exclusions>
+                <scope>provided</scope>
+            </dependency>
+
+            <!-- RabbitMQ -->
+            <dependency>
+                <groupId>com.rabbitmq</groupId>
+                <artifactId>amqp-client</artifactId>
+                <version>5.10.0</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <!-- Error Prone -->
+            <dependency>
+                <groupId>org.jetbrains</groupId>
+                <artifactId>annotations</artifactId>
+                <version>20.1.0</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <!-- Jackson -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${jackson.version}</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson.version}</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-jdk8</artifactId>
+                <version>${jackson.version}</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.module</groupId>
+                <artifactId>jackson-module-paranamer</artifactId>
+                <version>${jackson.version}</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-guava</artifactId>
+                <version>${jackson.version}</version>
+                <scope>compile</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <defaultGoal>verify install</defaultGoal>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.1.0</version>
+                    <configuration>
+                        <outputDirectory>${output.dir}</outputDirectory>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>3.0.1</version>
+                    <executions>
+                        <execution>
+                            <id>attach-sources</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-shade-plugin</artifactId>
+                    <version>3.2.0</version>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>shade</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>
