@@ -47,7 +47,6 @@ public class SpitBukkitPlugin extends JavaPlugin {
         MessagingService messagingService = new AmqpMessagingService(channelFactory.newChannel(), messageSerializer);
 
         SpitApi spitApi = new SpitApiImpl(messagingService);
-
         SpitApiBukkitProvider.register(spitApi);
     }
 }
